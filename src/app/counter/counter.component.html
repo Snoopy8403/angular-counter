@@ -1,8 +1,17 @@
-<h2>{{ counter?.name }}</h2>
 
-<button #btn (click)="incrementCounter()">Increment counter</button>
+<div class="container" [class.success]="isComplete">   
+    <input [ngClass]="{'red': !isComplete, 'green': isComplete}" [(ngModel)]="counter!.name">
+    <button
+        #btn
+        *ngIf="!isComplete" 
+        (click)="incrementCounter()">
+     Increment counter</button>
+    <div [ngStyle]="{'color': isComplete ? '#558b2f' : '#e53935'}">{{ count }} / {{ aim }}</div>
+    <div
+        *ngIf="!isComplete; else elseContent">
+    Hajrá!</div>
+</div>
 
-<p>{{ count }} / {{ aim }}</p>
-
-<p>{{ log }}</p>
-<button>Change detection check</button>
+<ng-template #elseContent>
+    <div>Szép munka!</div>
+</ng-template>

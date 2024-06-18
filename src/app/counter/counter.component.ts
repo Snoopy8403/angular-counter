@@ -1,13 +1,15 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-counter',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './counter.component.html',
   styleUrl: './counter.component.scss'
 })
-export class CounterComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy  {
+export class CounterComponent {
 
   @Input() aim = 10;
   @Input({required: false}) counter?: {name: string, id: number}
@@ -16,23 +18,6 @@ export class CounterComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
   count = 0;
   changeDetectionCounter = 0;
-
-  constructor(){
-    console.log('constructor');
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('onChanges', changes);
-  }
-  ngOnInit(): void {
-    console.log('onInit');
-  }
-  ngAfterViewInit(): void {
-    console.log('afterViewInit');
-    //this.buttonRef!.nativeElement.textContent = 'Set from TS';
-  }
-  ngOnDestroy(): void {
-    console.log('onDestroy');
-  }
 
   incrementCounter(){
     this.count = this.count + 1;
@@ -43,5 +28,9 @@ export class CounterComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.changeDetectionCounter++;
   //    console.log(this.changeDetectionCounter);
     return 'Change detection test';
+  }
+
+  get isComplete() {
+    return this.count >= this.aim;
   }
 }
